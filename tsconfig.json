@@ -2,24 +2,27 @@
 	"compileOnSave": false,
 	"compilerOptions": {
 		"strict": true,
-		"skipLibCheck": true,
-		"experimentalDecorators": true,
-		"importHelpers": true,
-
-		"target": "ES2022",
-		"module": "preserve",
-		"moduleResolution": "bundler",
-		"isolatedModules": true,
-
-		"forceConsistentCasingInFileNames": true,
-		"allowSyntheticDefaultImports": true,
+		"noUncheckedIndexedAccess": true,
+		"noUncheckedSideEffectImports": true,
+		"exactOptionalPropertyTypes": true,
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
+
+		"target": "ES2025",
+		"lib": ["es2025", "esnext.temporal", "esnext.iterator", "dom", "dom.iterable", "dom.asynciterable"],
+		"module": "preserve",
+		"moduleResolution": "bundler",
+		"moduleDetection": "force",
+		"isolatedModules": true,
+		"verbatimModuleSyntax": true,
+		"erasableSyntaxOnly": true,
 		"useDefineForClassFields": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true
+
+		"importHelpers": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
 	},
 	"angularCompilerOptions": {
 		"enableI18nLegacyMessageIdFormat": false,
