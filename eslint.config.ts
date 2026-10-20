@@ -1,4 +1,5 @@
 import * as angular from 'angular-eslint';
+import js from '@eslint/js';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 import tseslint from 'typescript-eslint';
@@ -9,7 +10,6 @@ export default tseslint.config(
 			'dist/',
 			'out-tsc/',
 			'node_modules/',
-			'**/*.js',
 			'eslint.config.ts',
 			'src/environments/*.ts',
 			'*.generated.ts',
@@ -20,8 +20,9 @@ export default tseslint.config(
 	{
 		files: ['**/*.ts'],
 		extends: [
-			...tseslint.configs.recommended,
-			...tseslint.configs.stylistic,
+			js.configs.recommended,
+			...tseslint.configs.strictTypeChecked,
+			...tseslint.configs.stylisticTypeChecked,
 			...angular.configs.tsRecommended,
 		],
 		languageOptions: {
@@ -66,7 +67,8 @@ export default tseslint.config(
 			'max-depth': ['warn', 4],
 			'max-lines-per-function': ['warn', { max: 80 }],
 			complexity: ['warn', { max: 20 }],
-			'no-unused-vars': 'error',
+
+			'@typescript-eslint/no-unused-vars': ['warn', { args: 'all', ignoreRestSiblings: true }],
 
 			'sort-imports': [
 				'error',
@@ -75,7 +77,6 @@ export default tseslint.config(
 					ignoreDeclarationSort: false,
 					ignoreMemberSort: false,
 					memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
-					allowSeparatedGroups: true,
 				},
 			],
 		},
