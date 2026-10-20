@@ -1,12 +1,9 @@
-import * as angular from '@angular-eslint/eslint-plugin';
-import * as angularTemplate from '@angular-eslint/eslint-plugin-template';
-import * as tseslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import angularTemplateParser from '@angular-eslint/template-parser';
+import * as angular from 'angular-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
+import tseslint from 'typescript-eslint';
 
-export default [
+export default tseslint.config(
 	{
 		ignores: [
 			'dist/',
@@ -22,22 +19,22 @@ export default [
 	},
 	{
 		files: ['**/*.ts'],
+		extends: [
+			...tseslint.configs.recommended,
+			...tseslint.configs.stylistic,
+			...angular.configs.tsRecommended,
+		],
 		languageOptions: {
-			parser: tsParser,
 			parserOptions: {
 				project: './tsconfig.eslint.json',
 				tsconfigRootDir: import.meta.dirname,
 			},
 		},
 		plugins: {
-			'@angular-eslint': angular,
-			'@typescript-eslint': tseslint,
 			prettier: prettierPlugin,
 		},
+		processor: angular.processInlineTemplates,
 		rules: {
-			...tseslint.configs.recommended.rules,
-			...tseslint.configs.stylistic.rules,
-			...angular.configs.recommended.rules,
 			'prettier/prettier': 'error',
 
 			'@angular-eslint/directive-selector': [
@@ -86,16 +83,8 @@ export default [
 
 	{
 		files: ['**/*.html'],
-		languageOptions: {
-			parser: angularTemplateParser,
-		},
-		plugins: {
-			'@angular-eslint/template': angularTemplate,
-		},
+		extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
 		rules: {
-			...angularTemplate.configs.recommended.rules,
-			...angularTemplate.configs.accessibility.rules,
-
 			'@angular-eslint/template/cyclomatic-complexity': ['warn', { maxComplexity: 5 }],
 
 			'@angular-eslint/template/prefer-control-flow': 'error',
@@ -108,4 +97,4 @@ export default [
 	},
 
 	prettierConfig,
-];
+);
