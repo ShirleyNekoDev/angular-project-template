@@ -1,6 +1,7 @@
 import * as angular from 'angular-eslint';
 import js from '@eslint/js';
 import { readFileSync } from 'node:fs';
+import perfectionist from 'eslint-plugin-perfectionist';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 import tseslint from 'typescript-eslint';
@@ -38,6 +39,7 @@ export default tseslint.config(
 			},
 		},
 		plugins: {
+			perfectionist,
 			prettier: prettierPlugin,
 		},
 		processor: angular.processInlineTemplates,
@@ -76,13 +78,25 @@ export default tseslint.config(
 
 			'@typescript-eslint/no-unused-vars': ['warn', { args: 'all', ignoreRestSiblings: true }],
 
-			'sort-imports': [
+			'perfectionist/sort-imports': [
 				'error',
 				{
-					ignoreCase: false,
-					ignoreDeclarationSort: false,
-					ignoreMemberSort: false,
-					memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+					type: 'alphabetical',
+					order: 'asc',
+					groups: [
+						['builtin', 'external'],
+						{ newlinesBetween: 1 },
+						['parent', 'sibling', 'index'],
+						{ newlinesBetween: 1 },
+						['side-effect', 'side-effect-style'],
+					],
+				},
+			],
+			'perfectionist/sort-named-imports': [
+				'error',
+				{
+					type: 'alphabetical',
+					order: 'asc',
 				},
 			],
 		},
