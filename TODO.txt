@@ -1,0 +1,37 @@
+pnpx skills add https://github.com/angular/skills
+
+
+The "@angular-devkit/build-angular:dev-server" builder is deprecated as part of Angular's Webpack support deprecation. Use "@angular/build:dev-server" instead. For more information, see https://angular.dev/tools/cli/build-system-migration.
+
+
+Check if you have to apply storybook best practices or migrations from https://github.com/storybookjs/storybook/blob/next/MIGRATION.md .
+Can storybook tests run with both latest chromium/edge and latest Firefox (assuming both are installed)? Can it fall back to installing portable versions of both if not present?
+
+
+Add .browserslistrc with eslint-plugin-compat for modern Firefox / Chromium browsers (2025 or later). Does that match with the features I required in tsconfig or are polyfills needed?
+
+
+Check which dependencies/tools in this project provide MCP servers and add them in .vscode/mcp.json - e.g. I've found those: ```
+https://storybook.js.org/docs/ai/mcp/overview
+https://storybook.js.org/addons/@storybook/addon-mcp
+https://github.com/mcpland/storybook-mcp
+
+https://github.com/vitest-community/mcp
+https://github.com/madrus/vitest-mcp-server
+https://mcpmarket.com/server/vitest
+``` prefer the official or community approved ones, or lastest ones with best/most features if the other implementations are lacking or work in progress.
+
+
+Would it be reasonable to add angular-devkit/build-angular package which is currently ignoreMissing?
+Which dependencies are currently non-compatible with the latest Angular? Do they have a Beta or milestone with which they become fully supported?
+Check if you can clean up dependencies / package.json / workspace files. Is autoInstallPeers still necessary?
+
+
+Check that the current project state follows modern angular best practices and modern strict eslint configuration.
+https://angular.dev/assets/context/best-practices.md
+https://angular.dev/style-guide
+https://google.github.io/styleguide/tsguide.html
+
+
+Setup coverage reporting for vitest Unit tests and component tests.
+Is there a linting / check for TS import complexity / angular build or runtime circular dependencies?
