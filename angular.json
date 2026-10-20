@@ -1,51 +1,14 @@
 {
 	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-	"schematics": {
-		"@schematics/angular": {
-			"component": {
-				"changeDetection": "OnPush"
-			}
-		}
-	},
 	"version": 1,
 	"cli": {
 		"packageManager": "pnpm",
-    "schematicCollections": [
-      "angular-eslint"
-    ],
-    "analytics": false
+		"analytics": false
 	},
 	"newProjectRoot": "projects",
 	"projects": {
 		"placeholder-project-name": {
 			"projectType": "application",
-			"schematics": {
-				"@schematics/angular:component": {
-					"style": "scss",
-					"skipTests": true
-				},
-				"@schematics/angular:class": {
-					"skipTests": true
-				},
-				"@schematics/angular:directive": {
-					"skipTests": true
-				},
-				"@schematics/angular:guard": {
-					"skipTests": true
-				},
-				"@schematics/angular:interceptor": {
-					"skipTests": true
-				},
-				"@schematics/angular:pipe": {
-					"skipTests": true
-				},
-				"@schematics/angular:resolver": {
-					"skipTests": true
-				},
-				"@schematics/angular:service": {
-					"skipTests": true
-				}
-			},
 			"root": "",
 			"sourceRoot": "src",
 			"prefix": "jpr",

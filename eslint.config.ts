@@ -1,8 +1,14 @@
 import * as angular from 'angular-eslint';
 import js from '@eslint/js';
+import { readFileSync } from 'node:fs';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 import tseslint from 'typescript-eslint';
+
+const angularJson = JSON.parse(readFileSync(new URL('./angular.json', import.meta.url), 'utf8')) as {
+	projects: Record<string, { prefix?: string }>;
+};
+const prefix = Object.values(angularJson.projects).find((p) => p.prefix)?.prefix ?? 'app';
 
 export default tseslint.config(
 	{
@@ -42,7 +48,7 @@ export default tseslint.config(
 				'error',
 				{
 					type: 'attribute',
-					prefix: 'jpr',
+					prefix,
 					style: 'camelCase',
 				},
 			],
@@ -50,7 +56,7 @@ export default tseslint.config(
 				'error',
 				{
 					type: 'element',
-					prefix: 'jpr',
+					prefix,
 					style: 'kebab-case',
 				},
 			],
