@@ -1,5 +1,34 @@
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Project State
+
+Starter template: Angular 22, TypeScript 6.0, pnpm 12 (ESM), Vitest 5, Storybook 10, `sass-embedded` for SCSS. Full tooling/script reference is in `README.md`.
+
+- Placeholder names are intentional: package/project `placeholder-project-name`, selector prefix `templ`. The prefix's single source of truth is `angular.json`; `eslint.config.ts` reads it at runtime — never hardcode the prefix in ESLint config.
+- Import order (perfectionist): node-module imports first, local imports last, one blank line between groups. `eslint.config.ts` is lint-ignored.
+- Verify work with the gates below. Lint must have zero errors (a small number of warnings is acceptable, e.g. `no-call-expression` for signal calls in templates).
+
+### Gates
+
+| Command | What it checks |
+| --- | --- |
+| `pnpm build` | Production build (`@angular/build:application`) |
+| `pnpm lint` | Type-checked ESLint (flat config, `typescript-eslint` strict + `angular-eslint`) |
+| `pnpm test` | Unit tests — Vitest via the `@angular/build:unit-test` builder |
+| `pnpm test:storybook` | Story tests — standalone Vitest in **browser mode** (Playwright) via `vitest.config.mts` |
+| `pnpm build-storybook` | Static Storybook build |
+| `pnpm peers check` | pnpm peer-dependency consistency (must be clean) |
+
+### Tooling Gotchas (learned the hard way)
+
+- **pnpm**: `autoInstallPeers: false` — when adding a package, also add any of its required peers explicitly as devDependencies, then run `pnpm peers check`. `pnpm-workspace.yaml` overrides pin `@angular/animations` and `@angular-devkit/build-angular` to the current Angular version; keep them in sync on Angular upgrades (Storybook's packages otherwise auto-resolve an incompatible `build-angular` v21).
+- **Storybook**: `dev`/`build`/`test` CLI commands do not exist in SB 10 — dev/build run as Angular targets (`@storybook/angular-vite:start-storybook` / `:build-storybook` in `angular.json`). Story tests run through `vitest.config.mts` (`storybookTest()` + `storybookAngularVitest()` plugins).
+- **Story-test browser**: `vitest.config.mts` sets `launchOptions: { channel: 'msedge' }` (system Edge, no browser download). Stock Playwright Chromium = remove `launchOptions` and run `pnpm exec playwright install chromium`. Non-browser (jsdom/happy-dom) story-test mode is a known broken Storybook bug — keep browser mode.
+- **Angular 22 testing API**: `TestBed.createComponent(Cmp, { bindings: [inputBinding('name', () => value)] })` — the old `{ inputs: {...} }` option no longer exists. `inputBinding` is exported from `@angular/core`.
+- **TypeScript 6.0**: `baseUrl` is deprecated (breaks the build). Import aliases are bare `paths` in `tsconfig.json`, relative to that file; standalone Vite tooling (Storybook) needs the alias mirrored via `resolve.alias` / `viteFinal` — see README "Import aliases".
+- **SCSS**: use `sass-embedded` (native, preferred by both `@angular/build` and Vite), not `sass`.
+- **Windows/PowerShell**: pnpm writes its banner to stderr, which PowerShell surfaces as `NativeCommandError` — judge success by `$LASTEXITCODE` and the actual output, not the stderr noise.
+
 ## TypeScript Best Practices
 
 - Use strict type checking
