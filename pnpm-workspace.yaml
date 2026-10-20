@@ -3,3 +3,10 @@ allowBuilds:
   esbuild: true
   lmdb: true
   msgpackr-extract: true
+autoInstallPeers: false
+overrides:
+  '@angular/animations': '22.2.3'
+  '@angular-devkit/build-angular': '22.2.3'
+peerDependencyRules:
+  ignoreMissing:
+    - '@angular-devkit/build-angular'

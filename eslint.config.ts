@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import perfectionist from 'eslint-plugin-perfectionist';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
+import storybook from 'eslint-plugin-storybook';
 import tseslint from 'typescript-eslint';
 
 const angularJson = JSON.parse(readFileSync(new URL('./angular.json', import.meta.url), 'utf8')) as {
@@ -114,6 +115,17 @@ export default tseslint.config(
 			'@angular-eslint/template/no-call-expression': 'warn',
 			'@angular-eslint/template/no-duplicate-attributes': 'error',
 			'@angular-eslint/template/eqeqeq': 'error',
+		},
+	},
+
+	{
+		files: ['**/*.stories.ts'],
+		extends: [storybook.configs['flat/recommended']],
+		languageOptions: {
+			parserOptions: {
+				project: './tsconfig.eslint.json',
+				tsconfigRootDir: import.meta.dirname,
+			},
 		},
 	},
 
