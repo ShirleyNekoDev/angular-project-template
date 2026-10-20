@@ -11,7 +11,7 @@
 			"projectType": "application",
 			"root": "",
 			"sourceRoot": "src",
-			"prefix": "jpr",
+			"prefix": "templ",
 			"architect": {
 				"build": {
 					"builder": "@angular/build:application",

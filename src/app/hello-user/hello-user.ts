@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 @Component({
-	selector: 'jpr-hello-user',
+	selector: 'templ-hello-user',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<p data-testid="greeting">{{ greeting() }}</p>

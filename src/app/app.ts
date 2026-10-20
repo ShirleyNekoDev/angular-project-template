@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-	selector: 'jpr-root',
+	selector: 'templ-root',
 	imports: [RouterOutlet],
 	templateUrl: './app.html',
 	styleUrl: './app.scss',
