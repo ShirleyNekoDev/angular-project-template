@@ -63,7 +63,7 @@ export default tseslint.config(
 					style: 'kebab-case',
 				},
 			],
-			'@angular-eslint/prefer-on-push-component-change-detection': 'error',
+			'@angular-eslint/prefer-on-push-component-change-detection': ['error', { allowExplicitOnPush: false }],
 			'@angular-eslint/prefer-standalone': 'error',
 			'@angular-eslint/prefer-signals': 'error',
 			'@angular-eslint/no-output-on-prefix': 'error',
@@ -112,7 +112,8 @@ export default tseslint.config(
 			'@angular-eslint/template/prefer-control-flow': 'error',
 			'@angular-eslint/template/no-negated-async': 'error',
 			'@angular-eslint/template/banana-in-box': 'error',
-			'@angular-eslint/template/no-call-expression': 'warn',
+			// Disabled: the rule cannot tell cheap, auto-tracked signal reads (idiomatic in templates) apart from expensive method calls
+			'@angular-eslint/template/no-call-expression': 'off',
 			'@angular-eslint/template/no-duplicate-attributes': 'error',
 			'@angular-eslint/template/eqeqeq': 'error',
 		},
