@@ -6,7 +6,7 @@ Starter template: Angular 22, TypeScript 6.0, pnpm 12 (ESM), Vitest 5, Storybook
 
 - Placeholder names are intentional: package/project `placeholder-project-name`, selector prefix `templ`. The prefix's single source of truth is `angular.json`; `eslint.config.ts` reads it at runtime — never hardcode the prefix in ESLint config.
 - Import order (perfectionist): node-module imports first, local imports last, one blank line between groups. `eslint.config.ts` is lint-ignored.
-- Verify work with the gates below. Lint must have zero errors (a small number of warnings is acceptable, e.g. `no-call-expression` for signal calls in templates).
+- Verify work with the gates below. Lint must pass with zero errors and zero warnings.
 
 ### Gates
 
@@ -55,7 +55,7 @@ Starter template: Angular 22, TypeScript 6.0, pnpm 12 (ESM), Vitest 5, Storybook
 - Keep components small and focused on a single responsibility
 - Use `input()` and `output()` functions instead of decorators
 - Use `computed()` for derived state
-- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
+- Omit `changeDetection` — `OnPush` is the default since Angular 22 (`Default` is now deprecated `Eager`); never opt out to `Eager`
 - Prefer inline templates for small components
 - Prefer Reactive forms instead of Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead
