@@ -7,6 +7,11 @@ autoInstallPeers: false
 overrides:
   '@angular/animations': '22.2.3'
   fast-uri@>=3.0.0 <3.1.9: ^3.1.9
-  vite@>=8.3.0 <=8.3.2: ^8.3.3
+  vite@>=8.3.0 <=8.3.3: ^8.3.3
   webpack-dev-middleware@<7.4.5: ^7.4.5
   zod@<4.6.6: ^4.6.6
+  # App is zoneless: forbid zone.js in the graph so @angular/build:unit-test's zone
+  # detection stays in 'none' mode (it otherwise finds zone.js hoisted in
+  # node_modules/.pnpm/node_modules via transitive optional peers and breaks).
+  # See https://github.com/angular/angular-cli/issues/33435
+  zone.js: '-'
