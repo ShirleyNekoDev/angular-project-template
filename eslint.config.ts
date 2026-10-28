@@ -1,6 +1,7 @@
 import * as angular from 'angular-eslint';
 import js from '@eslint/js';
 import { readFileSync } from 'node:fs';
+import compat from 'eslint-plugin-compat';
 import perfectionist from 'eslint-plugin-perfectionist';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -130,5 +131,6 @@ export default tseslint.config(
 		},
 	},
 
+	compat.configs['flat/recommended'],
 	prettierConfig,
 );
