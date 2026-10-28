@@ -16,6 +16,8 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 | Unit tests | Vitest 5 via the `@angular/build:unit-test` builder |
 | Storybook | Storybook 10 (`@storybook/angular-vite`), run as Angular targets, `eslint-plugin-storybook` for story files |
 | Story tests | `@storybook/addon-vitest` — stories run as Vitest tests in a real browser (Playwright) |
+| SBOM | `pnpm create-sbom` (built-in `pnpm sbom`) — CycloneDX JSON to `sbom/` |
+| Security audit | `pnpm audit` — npm registry advisory database |
 
 ## Scripts
 
@@ -32,6 +34,8 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 | `pnpm coverage` | Both coverage runs above |
 | `pnpm storybook` | Storybook dev server at `http://localhost:6006` |
 | `pnpm build-storybook` | Static Storybook build to `storybook-static/` |
+| `pnpm create-sbom` | CycloneDX SBOM to `sbom/<name>-<version>.cdx.json` |
+| `pnpm audit` | Security audit against the npm advisory database |
 
 `test:storybook` launches a real browser via Playwright. `vitest.config.mts` currently sets
 `launchOptions: { channel: 'msedge' }` so it uses the system Edge without downloading a browser.

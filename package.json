@@ -13,7 +13,9 @@
     "test:storybook:coverage": "vitest run --coverage",
     "coverage": "pnpm test:coverage && pnpm test:storybook:coverage",
     "storybook": "ng run placeholder-project-name:storybook",
-    "build-storybook": "ng run placeholder-project-name:build-storybook"
+    "build-storybook": "ng run placeholder-project-name:build-storybook",
+    "create-sbom": "pnpm sbom --sbom-format cyclonedx --sbom-type application --out sbom/%s-%v.cdx.json",
+    "audit": "pnpm audit"
   },
   "private": true,
   "packageManager": "pnpm@12.15.0",
