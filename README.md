@@ -26,7 +26,10 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 | `pnpm watch` | Rebuild on change (development configuration) |
 | `pnpm lint` | Type-checked ESLint |
 | `pnpm test` | Unit tests (Vitest) |
+| `pnpm test:coverage` | Unit tests with coverage (report → `coverage/placeholder-project-name/`) |
 | `pnpm test:storybook` | Story tests (Vitest, browser mode) |
+| `pnpm test:storybook:coverage` | Story tests with coverage (report → `coverage/storybook/`) |
+| `pnpm coverage` | Both coverage runs above |
 | `pnpm storybook` | Storybook dev server at `http://localhost:6006` |
 | `pnpm build-storybook` | Static Storybook build to `storybook-static/` |
 
@@ -34,6 +37,24 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 `launchOptions: { channel: 'msedge' }` so it uses the system Edge without downloading a browser.
 To use stock Playwright Chromium instead, remove `launchOptions` and run
 `pnpm exec playwright install chromium`.
+
+## Coverage
+
+Both suites report with the `v8` provider (`@vitest/coverage-v8`): unit tests run in Node (a V8
+runtime), and story tests run in a Chromium-based browser (Edge), which the V8 provider supports.
+- `pnpm test:coverage` — `@angular/build:unit-test` with its native `coverage` options
+  (`angular.json` `coverage` configuration); report written to `coverage/placeholder-project-name/`.
+- `pnpm test:storybook:coverage` — `vitest run --coverage`; the coverage options live in
+  `vitest.config.mts` and the report is written to `coverage/storybook/`.
+
+Both scope the report to `src/app/**/*.ts` and explicitly exclude test scaffolding
+(`*.spec.ts`, `*.stories.ts`) and bootstrap wiring (`app.config.ts`, `app.routes.ts`) — Vitest 5's
+default coverage excludes are empty, so the exclusions must be stated. They are defined once in the
+`coverage` configuration of the `test` target in `angular.json`; `vitest.config.mts` reads
+`coverageInclude`/`coverageExclude`/`coverageReporters` from there at load time. The `provider` and
+`reportsDirectory` stay in the Vitest config, and story-test coverage remains gated on the
+`--coverage` CLI flag. Reports (`html`, `lcov`, `text`, `text-summary`) land under `coverage/`,
+which is gitignored.
 
 ## Import aliases
 

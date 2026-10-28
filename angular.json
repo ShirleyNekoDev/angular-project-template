@@ -70,7 +70,20 @@
 					}
 				},
 				"test": {
-					"builder": "@angular/build:unit-test"
+					"builder": "@angular/build:unit-test",
+					"configurations": {
+						"coverage": {
+							"coverage": true,
+							"coverageInclude": ["src/app/**/*.ts"],
+							"coverageExclude": [
+								"src/**/*.spec.ts",
+								"src/**/*.stories.ts",
+								"src/app/app.config.ts",
+								"src/app/app.routes.ts"
+							],
+							"coverageReporters": ["text", "text-summary", "html", "lcov"]
+						}
+					}
 				},
 				"storybook": {
 					"builder": "@storybook/angular-vite:start-storybook",
