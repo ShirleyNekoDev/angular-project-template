@@ -50,8 +50,12 @@ export default defineConfig({
 	test: {
 		browser: {
 			enabled: true,
-			provider: playwright({ launchOptions: { channel: 'msedge' } }),
-			instances: [{ browser: 'chromium', headless: true }],
+			provider: playwright(),
+			headless: true,
+			instances: [
+				{ browser: 'chromium' },
+				{ browser: 'firefox' },
+			],
 		},
 		coverage: {
 			provider: 'v8',

@@ -37,15 +37,19 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 | `pnpm create-sbom` | CycloneDX SBOM to `sbom/<name>-<version>.cdx.json` |
 | `pnpm audit` | Security audit against the npm advisory database |
 
-`test:storybook` launches a real browser via Playwright. `vitest.config.mts` currently sets
-`launchOptions: { channel: 'msedge' }` so it uses the system Edge without downloading a browser.
-To use stock Playwright Chromium instead, remove `launchOptions` and run
-`pnpm exec playwright install chromium`.
+`test:storybook` launches real browsers via Playwright (Chromium and Firefox, headless).
+Before running story tests, install the browser binaries once:
+
+```
+pnpm exec playwright install chromium firefox
+```
 
 ## Coverage
 
 Both suites report with the `v8` provider (`@vitest/coverage-v8`): unit tests run in Node (a V8
-runtime), and story tests run in a Chromium-based browser (Edge), which the V8 provider supports.
+runtime), and story tests run in both Chromium and Firefox (headless). The V8 coverage provider
+collects from the Chromium instance (via CDP); Firefox instances execute the tests but do not
+contribute coverage data.
 - `pnpm test:coverage` — `@angular/build:unit-test` with its native `coverage` options
   (`angular.json` `coverage` configuration); report written to `coverage/placeholder-project-name/`.
 - `pnpm test:storybook:coverage` — `vitest run --coverage`; the coverage options live in
