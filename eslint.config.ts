@@ -2,6 +2,7 @@ import * as angular from 'angular-eslint';
 import js from '@eslint/js';
 import { readFileSync } from 'node:fs';
 import compat from 'eslint-plugin-compat';
+import importX from 'eslint-plugin-import-x';
 import perfectionist from 'eslint-plugin-perfectionist';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -43,6 +44,7 @@ export default tseslint.config(
 		plugins: {
 			perfectionist,
 			prettier: prettierPlugin,
+			'import-x': importX,
 		},
 		processor: angular.processInlineTemplates,
 		rules: {
@@ -74,9 +76,13 @@ export default tseslint.config(
 			'@angular-eslint/no-empty-lifecycle-method': 'warn',
 			'@angular-eslint/use-component-selector': 'warn',
 
-			'max-depth': ['warn', 4],
-			'max-lines-per-function': ['warn', { max: 80 }],
-			complexity: ['warn', { max: 20 }],
+		'max-depth': ['warn', 4],
+		'max-lines-per-function': ['warn', { max: 80 }],
+		complexity: ['warn', { max: 20 }],
+
+		'import-x/no-cycle': 'error',
+		'import-x/no-self-import': 'error',
+		'import-x/no-duplicates': 'warn',
 
 			'@typescript-eslint/no-unused-vars': ['warn', { args: 'all', ignoreRestSiblings: true }],
 
