@@ -42,7 +42,9 @@ function readAngularCoverageOptions(): StoryCoverageOptions {
 			};
 		}
 	}
-	throw new Error('angular.json: no test target with a "coverage" configuration found; cannot derive coverage options.');
+	throw new Error(
+		'angular.json: no test target with a "coverage" configuration found; cannot derive coverage options.'
+	);
 }
 
 export default defineConfig({
@@ -52,10 +54,7 @@ export default defineConfig({
 			enabled: true,
 			provider: playwright(),
 			headless: true,
-			instances: [
-				{ browser: 'chromium' },
-				{ browser: 'firefox' },
-			],
+			instances: [{ browser: 'chromium' }, { browser: 'firefox' }],
 		},
 		coverage: {
 			provider: 'v8',

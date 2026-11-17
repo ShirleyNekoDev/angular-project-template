@@ -76,13 +76,13 @@ export default tseslint.config(
 			'@angular-eslint/no-empty-lifecycle-method': 'warn',
 			'@angular-eslint/use-component-selector': 'warn',
 
-		'max-depth': ['warn', 4],
-		'max-lines-per-function': ['warn', { max: 80 }],
-		complexity: ['warn', { max: 20 }],
+			'max-depth': ['warn', 4],
+			'max-lines-per-function': ['warn', { max: 80 }],
+			complexity: ['warn', { max: 20 }],
 
-		'import-x/no-cycle': 'error',
-		'import-x/no-self-import': 'error',
-		'import-x/no-duplicates': 'warn',
+			'import-x/no-cycle': 'error',
+			'import-x/no-self-import': 'error',
+			'import-x/no-duplicates': 'warn',
 
 			'@typescript-eslint/no-unused-vars': ['warn', { args: 'all', ignoreRestSiblings: true }],
 
@@ -138,5 +138,5 @@ export default tseslint.config(
 	},
 
 	compat.configs['flat/recommended'],
-	prettierConfig,
+	prettierConfig
 );

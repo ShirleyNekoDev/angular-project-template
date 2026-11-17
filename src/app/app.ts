@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
 	selector: 'templ-root',
 	imports: [RouterOutlet],
 	templateUrl: './app.html',
-	styleUrl: './app.scss',
 })
 export class App {
 	protected readonly title = signal('placeholder-project-name');

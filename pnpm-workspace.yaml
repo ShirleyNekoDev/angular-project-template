@@ -3,10 +3,14 @@ allowBuilds:
   esbuild: true
   lmdb: true
   msgpackr-extract: true
+  # Native bindings for the TS-aware resolver used by eslint-plugin-import-x
+  unrs-resolver: true
 autoInstallPeers: false
 overrides:
   '@angular/animations': '22.2.3'
   fast-uri@>=3.0.0 <3.1.9: ^3.1.9
+  # GHSA-g3hv-75wg-m249 (DoS), pulled in by eslint
+  minimatch@>=7.0.0 <11.0.1: ^11.0.1
   vite@>=8.3.0 <=8.3.3: ^8.3.3
   webpack-dev-middleware@<7.4.5: ^7.4.5
   zod@<4.6.6: ^4.6.6
