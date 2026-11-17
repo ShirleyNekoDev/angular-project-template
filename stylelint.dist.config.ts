@@ -1,11 +1,15 @@
 // Stylelint config for production build output (`dist/**/*.css`) — plain compiled CSS only.
 // doiuse cannot parse SCSS, so browser-feature checks run on the compiled output, after
 // `pnpm build`. Run with `pnpm lint:dist`.
-// Kept separate from `stylelint.config.mjs` so the source-oriented standard/recess rules
+// Kept separate from `stylelint.config.ts` so the source-oriented standard rules
 // do not run against generated, minified CSS.
+//
+// Like `stylelint.config.ts`, this is loaded by Node.js's type stripping (Stylelint 18):
+// erasable TypeScript syntax only.
 
-/** @type {import('stylelint').Config} */
-export default {
+import type { Config } from 'stylelint';
+
+const config: Config = {
 	plugins: [
 		// Browser-support checks via doiuse + caniuse; browsers are read from .browserslistrc
 		'stylelint-no-unsupported-browser-features',
@@ -15,3 +19,5 @@ export default {
 		'plugin/no-unsupported-browser-features': true,
 	},
 };
+
+export default config;
