@@ -4,21 +4,21 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 
 ## Tooling
 
-| Concern            | Tooling                                                                                                                                                                                                                                                                              |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Framework          | Angular 22 (standalone components, signals, OnPush), ES2025 target                                                                                                                                                                                                                   |
-| Language           | TypeScript 6.0 — `strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noUncheckedSideEffectImports`                                                                                                                                      |
-| Package manager    | pnpm 12 (`packageManager` pinned), ESM (`"type": "module"`)                                                                                                                                                                                                                          |
-| Build / dev server | `@angular/build` application + dev-server builders; SCSS via `sass-embedded`                                                                                                                                                                                                         |
-| Lint               | ESLint 10 (flat config) with `typescript-eslint` (strict, type-checked) and `angular-eslint` (TS + Angular templates, incl. inline templates); component prefix read from `angular.json`                                                                                             |
-| Style lint         | Stylelint 18 (`stylelint-config-standard-scss` + `stylelint-order` with Recess property order, TS config) for all SCSS — plain `.css` files are not part of the project; doiuse browser-feature check on compiled `dist/` CSS via `pnpm lint:dist` (browsers from `.browserslistrc`) |
-| Format             | Prettier 3 (`.prettierrc.yaml`, enforced as an ESLint rule for TS, plus `pnpm format` / `pnpm format:check` for the rest)                                                                                                                                                            |
-| Import order       | `eslint-plugin-perfectionist` — local imports after node-module imports                                                                                                                                                                                                              |
-| Unit tests         | Vitest 5 via the `@angular/build:unit-test` builder                                                                                                                                                                                                                                  |
-| Storybook          | Storybook 10 (`@storybook/angular-vite`), run as Angular targets, `eslint-plugin-storybook` for story files                                                                                                                                                                          |
-| Story tests        | `@storybook/addon-vitest` — stories run as Vitest tests in a real browser (Playwright)                                                                                                                                                                                               |
-| SBOM               | `pnpm create-sbom` (built-in `pnpm sbom`) — CycloneDX JSON to `sbom/`                                                                                                                                                                                                                |
-| Security audit     | `pnpm audit` — npm registry advisory database. Known open finding: `picomatch` ≤ 4.0.7 (GHSA-fc5q-39xc-vjpf, dev-only transitive of stylelint) has no patched release yet (Nov 2026)                                                                                                 |
+| Concern            | Tooling                                                                                                                                                                                                                                                                                                  |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework          | Angular 22 (standalone components, signals, OnPush), ES2025 target                                                                                                                                                                                                                                       |
+| Language           | TypeScript 6.0 — `strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noUncheckedSideEffectImports`                                                                                                                                                          |
+| Package manager    | pnpm 12 (`packageManager` pinned), ESM (`"type": "module"`)                                                                                                                                                                                                                                              |
+| Build / dev server | `@angular/build` application + dev-server builders; SCSS via `sass-embedded`                                                                                                                                                                                                                             |
+| Lint               | ESLint 10 (flat config) with `typescript-eslint` (strict, type-checked) and `angular-eslint` (TS + Angular templates, incl. inline templates); component prefix read from `angular.json`                                                                                                                 |
+| Style lint         | Stylelint 18 (`stylelint-config-standard-scss` + `stylelint-order` with Recess property order, TS config) for all CSS and SCSS; plain CSS is preferred over Sass (enforced by a local rule); doiuse browser-feature check on compiled `dist/` CSS via `pnpm lint:dist` (browsers from `.browserslistrc`) |
+| Format             | Prettier 3 (`.prettierrc.yaml`, enforced as an ESLint rule for TS, plus `pnpm format` / `pnpm format:check` for the rest)                                                                                                                                                                                |
+| Import order       | `eslint-plugin-perfectionist` — local imports after node-module imports                                                                                                                                                                                                                                  |
+| Unit tests         | Vitest 5 via the `@angular/build:unit-test` builder                                                                                                                                                                                                                                                      |
+| Storybook          | Storybook 10 (`@storybook/angular-vite`), run as Angular targets, `eslint-plugin-storybook` for story files                                                                                                                                                                                              |
+| Story tests        | `@storybook/addon-vitest` — stories run as Vitest tests in a real browser (Playwright)                                                                                                                                                                                                                   |
+| SBOM               | `pnpm create-sbom` (built-in `pnpm sbom`) — CycloneDX JSON to `sbom/`                                                                                                                                                                                                                                    |
+| Security audit     | `pnpm audit` — npm registry advisory database. Known open finding: `picomatch` ≤ 4.0.7 (GHSA-fc5q-39xc-vjpf, dev-only transitive of stylelint) has no patched release yet (Nov 2026)                                                                                                                     |
 
 ## Scripts
 
@@ -55,8 +55,20 @@ SCSS/CSS linting is Stylelint's job — ESLint handles TS and Angular templates,
 formatting (Stylelint and Prettier can disagree on ordering; Stylelint's property-order rule wins
 for CSS/SCSS, Prettier only formats).
 
-- Only SCSS is linted (`src/**/*.scss`). Plain `.css` files are not part of the project — use
-  `.scss` for any new styles.
+- Both `src/**/*.css` and `src/**/*.scss` are linted. **Plain CSS is preferred** — use `.scss`
+  only when you actually need Sass (variables, mixins, interpolation, control flow,
+  @use/@forward modules). This is enforced by the local rule
+  `local/prefer-css-over-featureless-scss` (implementation in `tools/stylelint-prefer-css.ts`),
+  which fails `.scss` files that use no Sass features. Inline component styles
+  (`inlineStyleLanguage` in `angular.json`) default to `css`; switch it to `scss`
+  project-wide if inline Sass is ever needed.
+- How the build handles the two: `.scss`/`.sass` files are compiled by `sass-embedded` first;
+  plain `.css` files skip the Sass compiler entirely. Both end up in the same esbuild CSS
+  bundle, which also does the production CSS minification (`minify` in
+  `bundle-options.js`) — `@angular/build` has no Lightning CSS option. (Vite does support
+  `css.minify: 'lightningcss'`, but that would only affect Storybook output.)
+- `@import` is banned in SCSS (use `@use`/`@forward`) but allowed in plain CSS, where it is the
+  standard import mechanism.
 - Config lives in `stylelint.config.ts` — Stylelint 18 loads TypeScript configs via Node's
   built-in type stripping (erasable syntax only: no `enum`/`namespace`, `import type` for
   type-only imports; needs Node >= 22.18). The auto-discovered filename is `stylelint.config.ts`

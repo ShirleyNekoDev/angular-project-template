@@ -1,4 +1,4 @@
-// Stylelint config — the only SCSS linter in this project.
+// Stylelint config — the only CSS/SCSS linter in this project.
 //
 // File format: Stylelint 18 loads TypeScript configs via Node.js's built-in type
 // stripping, so this is plain TypeScript — erasable syntax only (no `enum`,
@@ -7,8 +7,11 @@
 // — `.mts` is not in cosmiconfig's search list, so do not rename it (the package
 // is ESM via "type": "module", so `.ts` is ESM).
 //
-// Division of labor: ESLint handles TS and Angular templates, Prettier handles
-// formatting, Stylelint handles actual Sass/CSS linting.
+// Convention: both `.css` and `.scss` are allowed, but plain CSS is preferred —
+// `local/prefer-css-over-featureless-scss` (a local plugin, see
+// `stylelint-prefer-css.ts`) fails `.scss` files that use no Sass features.
+// `.scss` is for real Sass: variables, mixins, interpolation, control flow,
+// @use/@forward modules.
 //
 // Property ordering: the `stylelint-config-recess-order` preset is NOT used — its
 // latest release (7.10.0) declares only `stylelint ^16.18 || ^17` as peer, which
@@ -625,6 +628,8 @@ const config: Config = {
 	plugins: [
 		// Property ordering rules (`order/*`)
 		'stylelint-order',
+		// Local plugin: fail .scss files that use no Sass features (prefer .css)
+		'./tools/stylelint-prefer-css.ts',
 	],
 	rules: {
 		// Allow any class naming scheme (Angular BEM-ish selectors like
@@ -647,8 +652,6 @@ const config: Config = {
 
 		// `@use 'partial'` / `@forward 'partial'`, not with a leading underscore or extension
 		'scss/load-no-partial-leading-underscore': true,
-		// Ban @import entirely — use the modern `@use`/`@forward` module system
-		'at-rule-disallowed-list': ['import'],
 
 		// No ID selectors — they are too specific for component-encapsulated styles
 		'selector-max-id': 0,
@@ -658,6 +661,20 @@ const config: Config = {
 		// Property ordering: Recess (spec-module) order, inlined above
 		'order/properties-order': recessPropertyOrder,
 	},
+	overrides: [
+		{
+			// SCSS-only rules.
+			files: ['**/*.scss'],
+			rules: {
+				// In Sass, @import is the deprecated pre-module import — ban it and
+				// require `@use`/`@forward`. In plain CSS, @import is the standard
+				// (and only) import mechanism, so it stays allowed there.
+				'at-rule-disallowed-list': ['import'],
+				// Fail .scss files that use no Sass features — plain CSS is preferred
+				'local/prefer-css-over-featureless-scss': true,
+			},
+		},
+	],
 };
 
 export default config;
