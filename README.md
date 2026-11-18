@@ -13,12 +13,13 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 | Lint               | ESLint 10 (flat config) with `typescript-eslint` (strict, type-checked) and `angular-eslint` (TS + Angular templates, incl. inline templates); component prefix read from `angular.json`                                                                                                                 |
 | Style lint         | Stylelint 18 (`stylelint-config-standard-scss` + `stylelint-order` with Recess property order, TS config) for all CSS and SCSS; plain CSS is preferred over Sass (enforced by a local rule); doiuse browser-feature check on compiled `dist/` CSS via `pnpm lint:dist` (browsers from `.browserslistrc`) |
 | Format             | Prettier 3 (`.prettierrc.yaml`, enforced as an ESLint rule for TS, plus `pnpm format` / `pnpm format:check` for the rest)                                                                                                                                                                                |
+| Markdown lint      | `markdownlint-cli2` over every `.md` file (`.markdownlint-cli2.jsonc`; rules that fight Prettier are disabled)                                                                                                                                                                                           |
 | Import order       | `eslint-plugin-perfectionist` — local imports after node-module imports                                                                                                                                                                                                                                  |
 | Unit tests         | Vitest 5 via the `@angular/build:unit-test` builder                                                                                                                                                                                                                                                      |
 | Storybook          | Storybook 10 (`@storybook/angular-vite`), run as Angular targets, `eslint-plugin-storybook` for story files                                                                                                                                                                                              |
 | Story tests        | `@storybook/addon-vitest` — stories run as Vitest tests in a real browser (Playwright)                                                                                                                                                                                                                   |
 | SBOM               | `pnpm create-sbom` (built-in `pnpm sbom`) — CycloneDX JSON to `sbom/`                                                                                                                                                                                                                                    |
-| Security audit     | `pnpm audit` — npm registry advisory database. Known open finding: `picomatch` ≤ 4.0.7 (GHSA-fc5q-39xc-vjpf, dev-only transitive of stylelint) has no patched release yet (Nov 2026)                                                                                                                     |
+| Security audit     | `pnpm audit` — npm registry advisory database                                                                                                                                                                                                                                                            |
 
 ## Scripts
 
@@ -27,8 +28,8 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 | `pnpm start`                   | Dev server at `http://localhost:4200`                                                  |
 | `pnpm build`                   | Production build to `dist/`                                                            |
 | `pnpm watch`                   | Rebuild on change (development configuration)                                          |
-| `pnpm lint`                    | Type-checked ESLint, then Stylelint over `src/**/*.scss`                               |
-| `pnpm lint:fix`                | Auto-fix ESLint and Stylelint                                                          |
+| `pnpm lint`                    | Type-checked ESLint, then Stylelint over `src/**/*.{css,scss}`, then markdownlint-cli2 |
+| `pnpm lint:fix`                | Auto-fix ESLint, Stylelint, and markdownlint-cli2                                      |
 | `pnpm lint:dist`               | doiuse browser-feature check over the compiled CSS in `dist/` (run after `pnpm build`) |
 | `pnpm format`                  | Prettier over the whole repo (`--write`)                                               |
 | `pnpm format:check`            | Prettier check without writing (`--check`)                                             |
@@ -45,7 +46,7 @@ Starter template for Angular 22 applications: pnpm, TypeScript 6, Vitest, and St
 `test:storybook` launches real browsers via Playwright (Chromium and Firefox, headless).
 Before running story tests, install the browser binaries once:
 
-```
+```bash
 pnpm exec playwright install chromium firefox
 ```
 

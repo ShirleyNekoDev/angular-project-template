@@ -1,0 +1,22 @@
+{
+	// markdownlint-cli2 config (https://github.com/DavidAnson/markdownlint-cli2).
+	// markdownlint-cli2 auto-discovers this filename; globs default to all .md
+	// files in the repo. Prettier owns formatting — any markdownlint rule that
+	// would fight it is disabled below.
+	"config": {
+		// Prettier controls line wrapping (proseWrap: preserve) — no line length cap
+		"MD013": false,
+		// The project indents with tabs (.editorconfig, Prettier useTabs) — code
+		// fences in markdown legitimately contain them
+		"MD010": false,
+		// Not every .md file is a document (AGENTS.md, working notes) — no H1
+		// requirement
+		"MD041": false,
+		// Table cell alignment / padding is Prettier's job
+		"MD055": false,
+		"MD056": false,
+		"MD057": false,
+	},
+	"globs": ["**/*.md"],
+	"ignores": ["node_modules", "dist", "coverage", "storybook-static", "sbom"],
+}
