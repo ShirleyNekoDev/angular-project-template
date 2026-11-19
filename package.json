@@ -16,6 +16,7 @@
 		"test:storybook": "vitest run",
 		"test:storybook:coverage": "vitest run --coverage",
 		"coverage": "pnpm test:coverage && pnpm test:storybook:coverage",
+		"check": "pnpm peers check && pnpm audit && pnpm format:check && pnpm lint && pnpm build && pnpm lint:dist && pnpm test && pnpm build-storybook && pnpm test:storybook",
 		"storybook": "ng run placeholder-project-name:storybook",
 		"build-storybook": "ng run placeholder-project-name:build-storybook",
 		"create-sbom": "pnpm sbom --sbom-format cyclonedx --sbom-type application --out sbom/%s-%v.cdx.json",
