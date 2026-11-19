@@ -6,6 +6,7 @@ allowBuilds:
   # Native bindings for the TS-aware resolver used by eslint-plugin-import-x
   unrs-resolver: true
 autoInstallPeers: false
+engineStrict: true
 overrides:
   '@angular/animations': '22.2.6'
   fast-uri@>=3.0.0 <3.1.9: ^3.1.9
