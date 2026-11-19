@@ -1,0 +1,69 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["config:recommended"],
+	"packageRules": [
+		{
+			"groupName": "Angular",
+			"matchPackageNames": [
+				"@angular/animations",
+				"@angular/cdk",
+				"@angular/common",
+				"@angular/compiler",
+				"@angular/compiler-cli",
+				"@angular/core",
+				"@angular/forms",
+				"@angular/platform-browser",
+				"@angular/router"
+			]
+		},
+		{
+			"groupName": "Angular CLI + build",
+			"matchPackageNames": ["@angular/build", "@angular/cli", "@angular-devkit/architect", "@angular-devkit/core"]
+		},
+		{
+			"groupName": "angular-eslint",
+			"matchPackageNames": ["angular-eslint", "@angular-eslint/builder"]
+		},
+		{
+			"groupName": "Storybook",
+			"matchPackageNames": [
+				"storybook",
+				"@storybook/addon-vitest",
+				"@storybook/angular-vite",
+				"eslint-plugin-storybook"
+			]
+		},
+		{
+			"groupName": "Vitest",
+			"matchPackageNames": ["vitest", "@vitest/browser", "@vitest/browser-playwright", "@vitest/coverage-v8"]
+		},
+		{
+			"groupName": "ESLint",
+			"matchPackageNames": [
+				"eslint",
+				"@eslint/js",
+				"typescript-eslint",
+				"eslint-plugin-import-x",
+				"eslint-plugin-perfectionist",
+				"eslint-plugin-prettier",
+				"eslint-plugin-compat",
+				"eslint-config-prettier",
+				"eslint-import-resolver-node"
+			]
+		},
+		{
+			"groupName": "Stylelint",
+			"matchPackageNames": [
+				"stylelint",
+				"stylelint-config-standard-scss",
+				"stylelint-no-unsupported-browser-features",
+				"stylelint-order"
+			]
+		},
+		{
+			"matchPackageNames": ["node"],
+			"versioning": "node",
+			"groupName": "Node.js"
+		}
+	]
+}

@@ -7,8 +7,8 @@ allowBuilds:
   unrs-resolver: true
 autoInstallPeers: false
 engineStrict: true
+verifyDepsBeforeRun: install
 overrides:
-  '@angular/animations': '22.2.6'
   fast-uri@>=3.0.0 <3.1.9: ^3.1.9
   # GHSA-g3hv-75wg-m249 (DoS), pulled in by eslint
   minimatch@>=7.0.0 <11.0.1: ^11.0.1
