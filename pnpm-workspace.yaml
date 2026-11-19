@@ -7,7 +7,7 @@ allowBuilds:
   unrs-resolver: true
 autoInstallPeers: false
 overrides:
-  '@angular/animations': '22.2.3'
+  '@angular/animations': '22.2.6'
   fast-uri@>=3.0.0 <3.1.9: ^3.1.9
   # GHSA-g3hv-75wg-m249 (DoS), pulled in by eslint
   minimatch@>=7.0.0 <11.0.1: ^11.0.1
@@ -16,6 +16,12 @@ overrides:
   vite@>=8.3.0 <=8.3.3: ^8.3.3
   webpack-dev-middleware@<7.4.5: ^7.4.5
   zod@<4.6.6: ^4.6.6
+  # @angular/build 22.2.7 pulls oxc-parser 0.156.0, whose wasm32-wasi binding ships
+  # @napi-rs/wasm-runtime 1.2.7 next to @emnapi 2.0.0-alpha.6 — but 1.2.7's @emnapi peer
+  # range (^1.7.1 || 2.0.0-beta.2/3) rejects that alpha. 1.2.5's range
+  # (^1.7.1 || ^2.0.0-alpha.4) accepts every @emnapi version in the tree, so pin it there.
+  # The wasm32-wasi bindings are never loaded on a native platform.
+  '@napi-rs/wasm-runtime': '1.2.5'
   # App is zoneless: forbid zone.js in the graph so @angular/build:unit-test's zone
   # detection stays in 'none' mode (it otherwise finds zone.js hoisted in
   # node_modules/.pnpm/node_modules via transitive optional peers and breaks).
