@@ -163,7 +163,6 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@angular/animations': 22.2.6
   fast-uri@>=3.0.0 <3.1.9: ^3.1.9
   minimatch@>=7.0.0 <11.0.1: ^11.0.1
   katex@<0.18.2: ^0.18.2
@@ -235,6 +234,9 @@ importers:
       '@eslint/js':
         specifier: 10.0.1
         version: 10.0.1(eslint@10.15.0(jiti@2.7.0)(supports-color@8.1.1))
+      '@storybook/addon-a11y':
+        specifier: 10.6.7
+        version: 10.6.7(storybook@10.6.7(prettier@3.10.1)(react@19.3.1))
       '@storybook/addon-vitest':
         specifier: 10.6.7
         version: 10.6.7(@vitest/browser-playwright@5.1.1)(@vitest/browser@5.1.1)(react@19.3.1)(storybook@10.6.7(prettier@3.10.1)(react@19.3.1))(vitest@5.1.1)
@@ -2236,6 +2238,11 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
+  '@storybook/addon-a11y@10.6.7':
+    resolution: {integrity: sha512-ARd+bjfOYoICe00+svRgFsCVqV7RbN+wgi8yfRhk31kESR7NnTMBGiZD8vWv/r3xqul/Ddr1uR6mUK4lpH7sqw==}
+    peerDependencies:
+      storybook: ^10.6.7
+
   '@storybook/addon-vitest@10.6.7':
     resolution: {integrity: sha512-8Pc71Al635pMfYK9mBfzBd87ta1yD7tgyn0IGPtK6HGdRM0IBrMzVW716Z0i4dfedMPma5z77sIzlr+7z4gBMA==}
     peerDependencies:
@@ -2257,7 +2264,7 @@ packages:
       '@analogjs/vite-plugin-angular': '>=2.7.3'
       '@angular-devkit/architect': '>=0.2100.0 < 0.2300.0'
       '@angular-devkit/core': '>=21.0.0 < 23.0.0'
-      '@angular/animations': 22.2.6
+      '@angular/animations': '>=21.0.0 < 23.0.0'
       '@angular/build': '>=21.0.0 < 23.0.0'
       '@angular/cli': '>=21.0.0 < 23.0.0'
       '@angular/common': '>=21.0.0 < 23.0.0'
@@ -2772,6 +2779,10 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
+
+  axe-core@4.14.1:
+    resolution: {integrity: sha512-FHfa+lmNjQZfJz1q8wKqIDwC6DExcHt/pkjNQb09a3NPjCKg2rhu5qb2S4r76ASyFNNtuFooJpZe37OgudVGtQ==}
+    engines: {node: '>=4'}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -6813,6 +6824,12 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
+  '@storybook/addon-a11y@10.6.7(storybook@10.6.7(prettier@3.10.1)(react@19.3.1))':
+    dependencies:
+      '@storybook/global': 5.0.0
+      axe-core: 4.14.1
+      storybook: 10.6.7(prettier@3.10.1)(react@19.3.1)
+
   '@storybook/addon-vitest@10.6.7(@vitest/browser-playwright@5.1.1)(@vitest/browser@5.1.1)(react@19.3.1)(storybook@10.6.7(prettier@3.10.1)(react@19.3.1))(vitest@5.1.1)':
     dependencies:
       '@storybook/global': 5.0.0
@@ -7392,6 +7409,8 @@ snapshots:
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.1.0
+
+  axe-core@4.14.1: {}
 
   axobject-query@4.1.0: {}
 
